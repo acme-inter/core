@@ -11,6 +11,13 @@
 		<relativePath/>
 	</parent>
 
+	<scm>
+		<connection>scm:git:https://github.com/acme-inter/core.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:acme-inter/core.git</developerConnection>
+		<url>https://github.com/acme-inter/core</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<groupId>com.acme</groupId>
 	<artifactId>core</artifactId>
 	<version>1.0.0</version>
