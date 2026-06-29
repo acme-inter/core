@@ -1,27 +1,29 @@
 name: Acme Core Package
-
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install JDK 21 (Amazon Corretto)
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
-
+          cache: 'maven'
+          server-id: github
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_TOKEN
       - name: Verify JDK version
         run: java -version
-
-      - name: Build the shared package
-        run: mvn clean package
+      - name: Build and publish the shared package
+        env:
+          MAVEN_USERNAME: ${{ secrets.GIT_USERNAME }}
+          MAVEN_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: mvn -B clean deploy
